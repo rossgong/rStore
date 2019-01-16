@@ -35,7 +35,13 @@ function initialPrompt() {
 					}, {
 						type: "input",
 						message: "How many would you like to add? (Please enter a number)",
-						// validate: input => {console.log(/^[0-9]*$/.test(input)) ? true : "Not a Valid Number"},
+						validate: function (elem) {
+							if (!/^\d*$/.test(elem)) {
+								return "Not a number";
+							} else {
+								return true;
+							}
+						},
 						name: "amount"
 					}
 					]).then(function (res) {
@@ -52,7 +58,36 @@ function initialPrompt() {
 				});
 				break;
 			case "addProd":
+				inquirer.prompt([{
+					type: "input",
+					message: "What is the name of the new product?",
+					name: "name"
+				}, {
+					type: "input",
+					message: "Which department is the new product?",
+					name: "department"
+				}, {
+					type: "input",
+					message: "How much does it cost?",
+					name: "price"
+				}, {
+					type: "input",
+					message: "How may do you have?",
+					validate: function (elem) {
+						if (!/^\d*$/.test(elem)) {
+							return "Not a number";
+						} else {
+							return true;
+						}
+					},
+					name: "stock"
+				}
+				]).then(function (res) {
+					products.addProduct(res.name, res.department, res.price, res.stock);
+					console.log("Product added!");
 
+					products.close();
+				});
 				break;
 			default:
 

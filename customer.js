@@ -13,7 +13,13 @@ function initialPrompt(prods) {
 	}, {
 		type: "input",
 		message: "How many would you like to purchase? (Please enter a number)",
-		// validate: input => {console.log(/^[0-9]*$/.test(input)) ? true : "Not a Valid Number"},
+		validate: function (elem) {
+			if (!/^\d*$/.test(elem)) {
+				return "Not a number";
+			} else {
+				return true;
+			}
+		},
 		name: "amount"
 	}
 	]).then(function (res) {
